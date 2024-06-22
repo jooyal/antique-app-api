@@ -1,3 +1,3 @@
-import { config } from "./configuration.js";
+import { config } from "./config.js";
 
 export { config };
