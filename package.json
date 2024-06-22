@@ -1,35 +1,46 @@
 {
-	"name": "antique-app-api",
-	"version": "0.0.1",
-	"description": "Backend API for antiques app",
-	"main": "dist/app.js",
-	"type": "module",
-	"author": "Joseph Joyal",
-	"scripts": {
-		"start": "node src/app.js",
-		"dev": "node --loader ts-node/esm src/app.ts",
-		"build": "rm -rf dist && npx tsc -p .",
-		"test": "jest"
-	},
-	"license": "Private",
-	"engines": {
-		"node": ">=20.0.0"
-	},
-	"dependencies": {
-		"express": "^5.0.0-beta.1",
-		"lodash-es": "^4.17.21",
-		"pg": "^8.11.3",
-		"typeorm": "^0.3.20"
-	},
-	"devDependencies": {
-		"@types/express": "^4.17.21",
-		"@types/jest": "~29.5.12",
-		"@types/node": "^20.11.27",
-		"@types/lodash-es": "^4.17.12",
-		"jest": "~29.7.0",
-		"ts-jest": "^29.1.4",
-		"ts-node": "^10.9.2",
-		"tslib": "^2.6.2",
-		"typescript": "^5.4.2"
-	}
+  "name": "antique-app-api",
+  "version": "0.0.1",
+  "description": "Backend API for antiques app",
+  "main": "dist/app.js",
+  "type": "module",
+  "author": "Joseph Joyal",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --loader ts-node/esm src/app.ts",
+    "build": "rm -rf dist && npx tsc -p .",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "test": "jest"
+  },
+  "license": "Private",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "express": "^5.0.0-beta.1",
+    "lodash-es": "^4.17.21",
+    "pg": "^8.11.3",
+    "typeorm": "^0.3.20",
+    "dotenv": "^16.0.3",
+    "reflect-metadata": "^0.2.1",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "~29.5.12",
+    "@types/node": "^20.11.27",
+    "@types/lodash-es": "^4.17.12",
+    "jest": "~29.7.0",
+    "ts-jest": "^29.1.4",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.2"
+  }
 }
