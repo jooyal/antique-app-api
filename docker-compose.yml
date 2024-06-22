@@ -1,0 +1,34 @@
+services:
+  postgres:
+    container_name: antique-app-postgres
+    image: postgres:${DB_VERSION:-latest}
+    ports:
+      - '${DB_PORT:-5432}:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME:-default}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - antique-app
+
+  redis:
+    container_name: antique-app-redis
+    image: bitnami/redis:${REDIS_VERSION:-latest}
+    # restart: always
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    volumes:
+      - redis:/root/redis
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-default}
+    networks:
+      - antique-app
+
+volumes:
+  postgres:
+  redis:
+  
+networks:
+  antique-app:
