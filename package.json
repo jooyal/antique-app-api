@@ -6,15 +6,15 @@
   "type": "module",
   "author": "Joseph Joyal",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "node --loader ts-node/esm src/app.ts",
+    "start": "node --env-file=.env src/app.js",
+    "dev": "node --env-file=.env --loader ts-node/esm src/app.ts",
     "build": "rm -rf dist && npx tsc -p .",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "test": "jest"
   },
   "license": "Private",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.6.0"
   },
   "dependencies": {
     "express": "~5.0.0-beta.1",

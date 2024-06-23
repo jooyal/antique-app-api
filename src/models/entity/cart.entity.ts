@@ -10,7 +10,9 @@ class Cart extends Entities.BaseEntity {
   @TypeORM.JoinColumn()
   user!: TypeORM.Relation<Entities.User>;
 
-  @TypeORM.OneToMany(() => Entities.CartItem, (cartItem) => cartItem.cart)
+  @TypeORM.OneToMany(() => Entities.CartItem, (cartItem) => cartItem.cart, {
+    cascade: true,
+  })
   cartItems!: TypeORM.Relation<Entities.CartItem[]>;
 }
 

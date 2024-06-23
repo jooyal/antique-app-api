@@ -34,7 +34,9 @@ class Promotion extends Entities.BaseEntity {
 
   // should there be a cap for discount amount, maximum count?
   //  relations
-  @TypeORM.OneToMany(() => Entities.Order, (order) => order.promotion)
+  @TypeORM.OneToMany(() => Entities.Order, (order) => order.promotion, {
+    cascade: true,
+  })
   orders?: TypeORM.Relation<Entities.Order[]>;
 }
 

@@ -32,6 +32,9 @@ class Product extends Entities.BaseEntity {
   })
   tax!: number;
 
+  @TypeORM.Column({ type: "int", nullable: false, default: 1 })
+  inStockQuantity!: number;
+
   @TypeORM.Column({ type: "varchar", array: true, default: [] })
   keywords?: string[];
 
@@ -39,16 +42,23 @@ class Product extends Entities.BaseEntity {
   @TypeORM.ManyToOne(() => Entities.Category, (category) => category.products)
   category!: TypeORM.Relation<Entities.Category>;
 
-  @TypeORM.OneToMany(() => Entities.CartItem, (cartItem) => cartItem.product)
+  @TypeORM.OneToMany(() => Entities.CartItem, (cartItem) => cartItem.product, {
+    cascade: true,
+  })
   cartItems!: TypeORM.Relation<Entities.CartItem[]>;
 
   @TypeORM.OneToMany(
     () => Entities.WishlistItem,
-    (wishlistItem) => wishlistItem.product
+    (wishlistItem) => wishlistItem.product,
+    { cascade: true }
   )
   wishlistItems!: TypeORM.Relation<Entities.WishlistItem[]>;
 
-  @TypeORM.OneToMany(() => Entities.OrderItem, (orderItem) => orderItem.product)
+  @TypeORM.OneToMany(
+    () => Entities.OrderItem,
+    (orderItem) => orderItem.product,
+    { cascade: true }
+  )
   orderItems!: TypeORM.Relation<Entities.CartItem[]>;
 }
 

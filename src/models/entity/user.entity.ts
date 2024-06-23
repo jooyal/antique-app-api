@@ -41,11 +41,14 @@ class User extends Entities.BaseEntity {
 
   @TypeORM.OneToMany(
     () => Entities.UserFeedback,
-    (userFeedback) => userFeedback.user
+    (userFeedback) => userFeedback.user,
+    { cascade: true }
   )
   userFeedbacks!: TypeORM.Relation<Entities.UserFeedback[]>;
 
-  @TypeORM.OneToMany(() => Entities.Order, (order) => order.user)
+  @TypeORM.OneToMany(() => Entities.Order, (order) => order.user, {
+    cascade: true,
+  })
   orders!: TypeORM.Relation<Entities.Order[]>;
 }
 

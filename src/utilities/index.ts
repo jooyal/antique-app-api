@@ -1,3 +1,2 @@
-import { config } from "./config.js";
-
-export { config };
+export * from "./config.js";
+export * from "./messages.js";

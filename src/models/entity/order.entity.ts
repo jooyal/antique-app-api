@@ -66,7 +66,9 @@ class Order extends Entities.BaseEntity {
   @TypeORM.ManyToOne(() => Entities.Promotion, (promotion) => promotion.orders)
   promotion?: TypeORM.Relation<Entities.Promotion>;
 
-  @TypeORM.OneToMany(() => Entities.OrderItem, (orderItem) => orderItem.order)
+  @TypeORM.OneToMany(() => Entities.OrderItem, (orderItem) => orderItem.order, {
+    cascade: true,
+  })
   orderItems?: TypeORM.Relation<Entities.OrderItem[]>;
 }
 

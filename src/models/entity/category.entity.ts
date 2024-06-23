@@ -13,7 +13,9 @@ class Category extends Entities.BaseEntity {
   description?: string;
 
   // relations
-  @TypeORM.OneToMany(() => Entities.Product, (product) => product.category)
+  @TypeORM.OneToMany(() => Entities.Product, (product) => product.category, {
+    cascade: true,
+  })
   products!: TypeORM.Relation<Entities.Product[]>;
 }
 
