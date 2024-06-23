@@ -1,9 +1,9 @@
 import * as TypeORM from "typeorm";
 import { PromotionDiscountTypeEnum } from "../enum/index.js";
-import { BaseEntity } from "./index.js";
+import * as Entities from "./index.js";
 
 @TypeORM.Entity()
-class Promotion extends BaseEntity {
+class Promotion extends Entities.BaseEntity {
   @TypeORM.Column({ type: "varchar", nullable: false, length: 64 })
   name!: string;
 
@@ -32,7 +32,10 @@ class Promotion extends BaseEntity {
   })
   discountValue!: number;
 
-  // should there be a cap for discount?
+  // should there be a cap for discount amount, maximum count?
+  //  relations
+  @TypeORM.OneToMany(() => Entities.Order, (order) => order.promotion)
+  orders?: TypeORM.Relation<Entities.Order[]>;
 }
 
 export { Promotion };

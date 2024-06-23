@@ -1,9 +1,9 @@
 import * as TypeORM from "typeorm";
 import { UserRoleEnum } from "../enum/index.js";
-import { BaseEntity, Cart, UserFeedback } from "./index.js";
+import * as Entities from "./index.js";
 
 @TypeORM.Entity()
-class User extends BaseEntity {
+class User extends Entities.BaseEntity {
   @TypeORM.Column({ type: "varchar", nullable: false, length: 64 })
   firstName!: string;
 
@@ -33,11 +33,20 @@ class User extends BaseEntity {
   isBanned!: boolean;
 
   //  relation
-  @TypeORM.OneToOne(() => Cart, (cart) => cart.id)
-  cart!: TypeORM.Relation<Cart>;
+  @TypeORM.OneToOne(() => Entities.Cart, (cart) => cart.user)
+  cart!: TypeORM.Relation<Entities.Cart>;
 
-  @TypeORM.OneToMany(() => UserFeedback, (userFeedback) => userFeedback.id)
-  userFeedbacks!: TypeORM.Relation<UserFeedback[]>;
+  @TypeORM.OneToOne(() => Entities.Wishlist, (wishlist) => wishlist.user)
+  wishlist!: TypeORM.Relation<Entities.Wishlist>;
+
+  @TypeORM.OneToMany(
+    () => Entities.UserFeedback,
+    (userFeedback) => userFeedback.user
+  )
+  userFeedbacks!: TypeORM.Relation<Entities.UserFeedback[]>;
+
+  @TypeORM.OneToMany(() => Entities.Order, (order) => order.user)
+  orders!: TypeORM.Relation<Entities.Order[]>;
 }
 
 export { User };

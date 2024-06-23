@@ -1,17 +1,17 @@
 import * as TypeORM from "typeorm";
-import { BaseEntity, CartItem, User } from "./index.js";
+import * as Entities from "./index.js";
 
 @TypeORM.Entity()
-class Cart extends BaseEntity {
+class Cart extends Entities.BaseEntity {
   @TypeORM.Column({ type: "uuid", nullable: false })
   userId!: string;
 
-  @TypeORM.OneToOne(() => User, (user) => user.id)
+  @TypeORM.OneToOne(() => Entities.User, (user) => user.cart)
   @TypeORM.JoinColumn()
-  user!: TypeORM.Relation<User>;
+  user!: TypeORM.Relation<Entities.User>;
 
-  @TypeORM.OneToMany(() => CartItem, (cartItem) => cartItem.id)
-  cartItems!: TypeORM.Relation<CartItem[]>;
+  @TypeORM.OneToMany(() => Entities.CartItem, (cartItem) => cartItem.cart)
+  cartItems!: TypeORM.Relation<Entities.CartItem[]>;
 }
 
 export { Cart };

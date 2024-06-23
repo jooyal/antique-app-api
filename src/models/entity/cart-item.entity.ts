@@ -1,8 +1,8 @@
 import * as TypeORM from "typeorm";
-import { BaseEntity, Cart, Product } from "./index.js";
+import * as Entities from "./index.js";
 
 @TypeORM.Entity()
-class CartItem extends BaseEntity {
+class CartItem extends Entities.BaseEntity {
   @TypeORM.Column({ type: "uuid", nullable: false })
   cartId!: string;
 
@@ -12,11 +12,11 @@ class CartItem extends BaseEntity {
   @TypeORM.Column({ type: "int", nullable: false, default: 1 })
   quantity!: number;
 
-  @TypeORM.ManyToOne(() => Cart, (cart) => cart.id)
-  cart!: TypeORM.Relation<Cart>;
+  @TypeORM.ManyToOne(() => Entities.Cart, (cart) => cart.cartItems)
+  cart!: TypeORM.Relation<Entities.Cart>;
 
-  @TypeORM.ManyToOne(() => Product, (product) => product.id)
-  product!: TypeORM.Relation<Product>;
+  @TypeORM.ManyToOne(() => Entities.Product, (product) => product.cartItems)
+  product!: TypeORM.Relation<Entities.Product>;
 }
 
 export { CartItem };

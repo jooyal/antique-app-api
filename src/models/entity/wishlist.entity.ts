@@ -1,17 +1,20 @@
 import * as TypeORM from "typeorm";
-import { BaseEntity, User, WishlistItem } from "./index.js";
+import * as Entities from "./index.js";
 
 @TypeORM.Entity()
-class Wishlist extends BaseEntity {
+class Wishlist extends Entities.BaseEntity {
   @TypeORM.Column({ type: "uuid", nullable: false })
   userId!: string;
 
-  @TypeORM.OneToOne(() => User, (user) => user.id)
+  @TypeORM.OneToOne(() => Entities.User, (user) => user.wishlist)
   @TypeORM.JoinColumn()
-  user!: TypeORM.Relation<User>;
+  user!: TypeORM.Relation<Entities.User>;
 
-  @TypeORM.OneToMany(() => WishlistItem, (wishlistItem) => wishlistItem.id)
-  wishlistItems!: TypeORM.Relation<WishlistItem[]>;
+  @TypeORM.OneToMany(
+    () => Entities.WishlistItem,
+    (wishlistItem) => wishlistItem.wishlist
+  )
+  wishlistItems!: TypeORM.Relation<Entities.WishlistItem[]>;
 }
 
 export { Wishlist };

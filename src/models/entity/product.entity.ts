@@ -1,8 +1,11 @@
 import * as TypeORM from "typeorm";
-import { BaseEntity, CartItem, Category } from "./index.js";
+import * as Entities from "./index.js";
 
 @TypeORM.Entity()
-class Product extends BaseEntity {
+class Product extends Entities.BaseEntity {
+  @TypeORM.Column({ type: "uuid", nullable: false })
+  categoryId!: string;
+
   @TypeORM.Column({ type: "varchar", nullable: false, length: 64 })
   name!: string;
 
@@ -29,18 +32,24 @@ class Product extends BaseEntity {
   })
   tax!: number;
 
-  @TypeORM.Column({ type: "uuid", nullable: false })
-  categoryId!: string;
-
   @TypeORM.Column({ type: "varchar", array: true, default: [] })
   keywords?: string[];
 
   //  relations
-  @TypeORM.ManyToOne(() => Category, (category) => category.id)
-  category!: TypeORM.Relation<Category>;
+  @TypeORM.ManyToOne(() => Entities.Category, (category) => category.products)
+  category!: TypeORM.Relation<Entities.Category>;
 
-  @TypeORM.OneToMany(() => CartItem, (cartItem) => cartItem.id)
-  cartItems!: TypeORM.Relation<CartItem[]>;
+  @TypeORM.OneToMany(() => Entities.CartItem, (cartItem) => cartItem.product)
+  cartItems!: TypeORM.Relation<Entities.CartItem[]>;
+
+  @TypeORM.OneToMany(
+    () => Entities.WishlistItem,
+    (wishlistItem) => wishlistItem.product
+  )
+  wishlistItems!: TypeORM.Relation<Entities.WishlistItem[]>;
+
+  @TypeORM.OneToMany(() => Entities.OrderItem, (orderItem) => orderItem.product)
+  orderItems!: TypeORM.Relation<Entities.CartItem[]>;
 }
 
 export { Product };
