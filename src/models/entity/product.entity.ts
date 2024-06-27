@@ -32,7 +32,7 @@ class Product extends Entities.BaseEntity {
   })
   tax!: number;
 
-  @TypeORM.Column({ type: "int", nullable: false, default: 1 })
+  @TypeORM.Column({ type: "int", nullable: false, default: 0 })
   inStockQuantity!: number;
 
   @TypeORM.Column({ type: "varchar", array: true, default: [] })

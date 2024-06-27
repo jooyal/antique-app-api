@@ -2,12 +2,12 @@
   "name": "antique-app-api",
   "version": "0.0.1",
   "description": "Backend API for antiques app",
-  "main": "dist/app.js",
+  "main": "dist/server.js",
   "type": "module",
   "author": "Joseph Joyal",
   "scripts": {
-    "start": "node --env-file=.env src/app.js",
-    "dev": "node --env-file=.env --loader ts-node/esm src/app.ts",
+    "start": "node --env-file=.env dist/server.js",
+    "dev": "node --env-file=.env --loader ts-node/esm src/server.ts",
     "build": "rm -rf dist && npx tsc -p .",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "test": "jest"

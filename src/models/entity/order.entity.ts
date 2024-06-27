@@ -8,7 +8,7 @@ class Order extends Entities.BaseEntity {
   userId!: string;
 
   @TypeORM.Column({ type: "uuid", nullable: true })
-  promotionId?: string;
+  discountId?: string;
 
   @TypeORM.Column({
     type: "decimal",
@@ -16,7 +16,7 @@ class Order extends Entities.BaseEntity {
     scale: 2,
     default: 0.0,
   })
-  amount!: number; //excluding taxes and promotion discount
+  amount!: number; //excluding taxes and discount
 
   @TypeORM.Column({
     type: "decimal",
@@ -24,7 +24,7 @@ class Order extends Entities.BaseEntity {
     scale: 2,
     default: 0.0,
   })
-  discountAmount!: number; //promotional discount, calculated from promotion
+  discountAmount!: number; //promotional discount
 
   @TypeORM.Column({
     type: "decimal",
@@ -63,8 +63,8 @@ class Order extends Entities.BaseEntity {
   @TypeORM.ManyToOne(() => Entities.User, (user) => user.orders)
   user!: TypeORM.Relation<Entities.User>;
 
-  @TypeORM.ManyToOne(() => Entities.Promotion, (promotion) => promotion.orders)
-  promotion?: TypeORM.Relation<Entities.Promotion>;
+  @TypeORM.ManyToOne(() => Entities.Discount, (discount) => discount.orders)
+  discount?: TypeORM.Relation<Entities.Discount>;
 
   @TypeORM.OneToMany(() => Entities.OrderItem, (orderItem) => orderItem.order, {
     cascade: true,
