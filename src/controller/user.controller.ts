@@ -1,3 +1,3 @@
-class userController {
+class UserController {
     
 }

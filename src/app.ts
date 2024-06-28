@@ -1,31 +1,9 @@
-
-
-// const app: Express = express();
-// const port: number = config.port;
-// const hostname: string = config.hostname;
-// https://www.npmjs.com/package/rate-limiter-flexible
-// const main = () => {
-//   app.use("/", (_, res) => res.send("Working!"));
-
-//   app.listen(port, hostname, () => {
-//     console.log(
-//       `\napi running at ${config.environment !== "PRODUCTION" ? "http" : "https"}://${hostname}:${port}\n`
-//     );
-//   });
-// };
-
-// AppDataSource.initialize()
-//   .then(() => {
-//     console.log(messages.DB_INIT_SUCCESS);
-//     main();
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
 import express, { Express } from "express";
 import "reflect-metadata";
 import { baseAPIRouter } from "./routes/index.js";
+import { errorMiddleware } from "./models/error-handler.js";
+import { AppError } from "./models/app-error-handler.model.js";
+import { messages } from "./utilities/messages.js";
 // import { config, messages } from "./utilities/index.js";
 // import helmet from 'helmet';
 // import xss from 'xss-clean';
@@ -72,7 +50,7 @@ class App {
     // this.app.disable("x-powered-by");
 
     // Limit Repeated Failed Requests to Auth Endpoints
-    // if (config.env === "production") {
+    // if (config.env === NodeEnv.PRODUCTION) {
     //   this.app.use("/api", limiter);
     // }
 
@@ -90,6 +68,14 @@ class App {
 
     // API routes
     this.app.use(`/${this.APP_NAME}/${this.API_PATH_V1}`, baseAPIRouter);
+
+    // 404 error
+    this.app.use((_, __) => {
+      throw new AppError(messages.ERROR_CODE_MESSAGE[404], 404);
+    });
+
+    // error handler
+    this.app.use(errorMiddleware);
   }
 }
 

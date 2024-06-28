@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "express": "~5.0.0-beta.1",
+    "jsonwebtoken": "^9.0.2",
     "lodash-es": "~4.17.21",
     "pg": "~8.11.3",
     "reflect-metadata": "~0.2.1",
@@ -27,7 +28,7 @@
     "winston-daily-rotate-file": "~4.7.1"
   },
   "prettier": {
-    "printWidth": 80,
+    "printWidth": 120,
     "semi": true,
     "singleQuote": false,
     "trailingComma": "es5"
