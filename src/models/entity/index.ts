@@ -37,6 +37,5 @@ export {
   User,
   UserFeedback,
   Wishlist,
-  WishlistItem
+  WishlistItem,
 };
-

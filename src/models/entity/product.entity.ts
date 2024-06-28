@@ -47,18 +47,10 @@ class Product extends Entities.BaseEntity {
   })
   cartItems!: TypeORM.Relation<Entities.CartItem[]>;
 
-  @TypeORM.OneToMany(
-    () => Entities.WishlistItem,
-    (wishlistItem) => wishlistItem.product,
-    { cascade: true }
-  )
+  @TypeORM.OneToMany(() => Entities.WishlistItem, (wishlistItem) => wishlistItem.product, { cascade: true })
   wishlistItems!: TypeORM.Relation<Entities.WishlistItem[]>;
 
-  @TypeORM.OneToMany(
-    () => Entities.OrderItem,
-    (orderItem) => orderItem.product,
-    { cascade: true }
-  )
+  @TypeORM.OneToMany(() => Entities.OrderItem, (orderItem) => orderItem.product, { cascade: true })
   orderItems!: TypeORM.Relation<Entities.CartItem[]>;
 }
 

@@ -11,21 +11,18 @@ export const config = {
     username: process.env.DB_USERNAME || "postgres",
     password: process.env.DB_PASSWORD || "",
     entityPattern: process.env.DB_ENTITY_PATTERN || "",
-    shouldSynchronize:
-      process.env.DB_SHOULD_SYNCHRONIZE?.toUpperCase() === "TRUE",
-    shouldDropSchema:
-      process.env.DB_SHOULD_DROP_SCHEMA?.toUpperCase() === "TRUE",
+    shouldSynchronize: process.env.DB_SHOULD_SYNCHRONIZE?.toUpperCase() === "TRUE",
+    shouldDropSchema: process.env.DB_SHOULD_DROP_SCHEMA?.toUpperCase() === "TRUE",
   },
   logging: {
     // "info" for prod, "debug" for dev
     logLevel: process.env.LOGGING_LEVEL || "debug",
     label: process.env.LOGGING_LABEL || "antique-api",
-    datePattern:
-      process.env.LOGGING_DATE_PATTERN || 'DD-MM-YYYY',
+    datePattern: process.env.LOGGING_DATE_PATTERN || "DD-MM-YYYY",
     logDir: process.env.LOGGING_DIRECTORY || ".logs",
     fileName: process.env.LOGGING_FILE_NAME || "antique-api-log",
     frequency: process.env.LOGGING_FREQUENCY || "6h",
-    maxSize: process.env.LOGGING_MAX_SIZE || 20971520,//20MB
+    maxSize: process.env.LOGGING_MAX_SIZE || 20971520, //20MB
     maxFiles: process.env.LOGGING_MAX_FILES || 3,
   },
 };

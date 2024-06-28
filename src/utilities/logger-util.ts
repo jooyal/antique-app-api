@@ -11,9 +11,7 @@ class Logger {
     winston.format.label({ label: config.logging.label }),
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
-    config.logging.logLevel !== "debug"
-      ? winston.format.simple()
-      : winston.format.prettyPrint()
+    config.logging.logLevel !== "debug" ? winston.format.simple() : winston.format.prettyPrint()
   );
 
   logger = winston.createLogger({

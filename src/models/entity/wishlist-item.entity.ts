@@ -12,10 +12,7 @@ class WishlistItem extends Entities.BaseEntity {
   @TypeORM.Column({ type: "int", nullable: false, default: 1 })
   quantity!: number;
 
-  @TypeORM.ManyToOne(
-    () => Entities.Wishlist,
-    (wishlist) => wishlist.wishlistItems
-  )
+  @TypeORM.ManyToOne(() => Entities.Wishlist, (wishlist) => wishlist.wishlistItems)
   wishlist!: TypeORM.Relation<Entities.Wishlist>;
 
   @TypeORM.ManyToOne(() => Entities.Product, (product) => product.wishlistItems)

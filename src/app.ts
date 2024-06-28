@@ -55,16 +55,10 @@ class App {
     // }
 
     // healthcheck
-    this.app.use(
-      `/${this.APP_NAME}/healthcheck`,
-      /*healthCheckRoute*/ (_, res) => res.send(200)
-    );
+    this.app.use(`/${this.APP_NAME}/healthcheck`, /*healthCheckRoute*/ (_, res) => res.send(200));
 
     // API documentation
-    this.app.use(
-      `/${this.APP_NAME}/${this.SWAGGER_PATH_V1}`,
-      /*swaggerRoute*/ (_, res) => res.send(200)
-    );
+    this.app.use(`/${this.APP_NAME}/${this.SWAGGER_PATH_V1}`, /*swaggerRoute*/ (_, res) => res.send(200));
 
     // API routes
     this.app.use(`/${this.APP_NAME}/${this.API_PATH_V1}`, baseAPIRouter);

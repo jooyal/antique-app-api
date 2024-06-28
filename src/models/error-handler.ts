@@ -5,17 +5,10 @@ import { logger } from "../utilities/logger-util.js";
 import { messages } from "../utilities/messages.js";
 import { NodeEnvEnum } from "./enum/app.enum.js";
 
-function errorMiddleware(
-  error: any,
-  req: Request,
-  res: Response,
-  __: NextFunction
-) {
+function errorMiddleware(error: any, req: Request, res: Response, __: NextFunction) {
   // for internal failures in prod env, use 500 error code.
   const errorStatusCode =
-    (config.environment === NodeEnvEnum.PRODUCTION &&
-      error?.status &&
-      Math.floor(parseInt(error.status))) === 5
+    (config.environment === NodeEnvEnum.PRODUCTION && error?.status && Math.floor(parseInt(error.status))) === 5
       ? 500
       : error?.status
         ? error.status
@@ -35,7 +28,7 @@ function errorMiddleware(
 
   // remove stack in production environment.
   if (config.environment !== NodeEnvEnum.DEVELOPMENT) {
-    delete errorObj.error.stack
+    delete errorObj.error.stack;
   }
   return res.status(errorStatusCode).json(errorObj);
 }

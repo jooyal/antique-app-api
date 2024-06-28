@@ -10,11 +10,7 @@ class Wishlist extends Entities.BaseEntity {
   @TypeORM.JoinColumn()
   user!: TypeORM.Relation<Entities.User>;
 
-  @TypeORM.OneToMany(
-    () => Entities.WishlistItem,
-    (wishlistItem) => wishlistItem.wishlist,
-    { cascade: true }
-  )
+  @TypeORM.OneToMany(() => Entities.WishlistItem, (wishlistItem) => wishlistItem.wishlist, { cascade: true })
   wishlistItems!: TypeORM.Relation<Entities.WishlistItem[]>;
 }
 
