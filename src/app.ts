@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import "reflect-metadata";
 import { baseAPIRouter } from "./routes/index.js";
-import { errorMiddleware } from "./models/error-handler.js";
+import { errorMiddleware } from "./middlewares/error-handler.js";
 import { AppError } from "./models/app-error-handler.model.js";
 import { messages } from "./utilities/messages.js";
 // import { config, messages } from "./utilities/index.js";

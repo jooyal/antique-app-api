@@ -1,7 +1,6 @@
 import { App } from "./app.js";
 import { AppDataSource } from "./db/datasource.js";
-import { config, messages } from "./utilities/index.js";
-import { logger } from "./utilities/logger-util.js";
+import { config, logger, messages } from "./utilities/index.js";
 
 class Server extends App {
   private port: number = config.port;
