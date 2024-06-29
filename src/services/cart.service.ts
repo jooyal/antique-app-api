@@ -1,17 +1,66 @@
+import * as TypeORM from "typeorm";
 import { AppDataSource } from "../db/datasource.js";
 import { AppError } from "../models/app-error-handler.model.js";
 import * as Entities from "../models/entity/index.js";
-import { Maybe } from "../types/index.js";
+import { FilterEntityOutput, Maybe } from "../types/index.js";
+import { logger } from "../utilities/index.js";
 class CartService {
-  addProductToCart = async (userId: string, productId: string, quantity: number): Promise<Entities.CartItem> => {
+  private retrieveUserCart = async (userId: string): Promise<Entities.Cart> => {
     try {
-      // check if cart exist for the user.
-      const fetchedUserCart: Maybe<Entities.Cart> = await AppDataSource.getRepository(Entities.Cart).findOne({
+      // let filterObj: TypeORM.FindOneOptions<Entities.Cart> = {
+      //   where: { userId: userId },
+      // };
+      // if (returnCartItems) {
+      //   filterObj = {
+      //     ...filterObj,
+      //     relations: {
+      //       cartItems: true,
+      //     },
+      //     relationLoadStrategy: "query",
+      //   };
+      // }
+      const fetchedUserCart = await AppDataSource.getRepository(Entities.Cart).findOne({
         where: { userId: userId },
       });
       if (!fetchedUserCart) {
         throw new AppError("Cart for the user not found!", 500);
       }
+      return fetchedUserCart;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  filterCartItems = async (
+    userId: string,
+    pageNumber: number = 1,
+    take: number = 10
+  ): Promise<FilterEntityOutput<Entities.CartItem>> => {
+    try {
+      const skip = (pageNumber - 1) * take;
+      // check if cart exist for the user.
+      const fetchedUserCart: Maybe<Entities.Cart> = await this.retrieveUserCart(userId);
+
+      // fetch cart items
+      const [fetchedCartItems, count] = await AppDataSource.getRepository(Entities.CartItem).findAndCount({
+        where: { cartId: fetchedUserCart.id },
+        skip: skip,
+        take: take,
+      });
+      return {
+        result: fetchedCartItems,
+        totalCount: count,
+      };
+    } catch (error) {
+      logger.error(error);
+      throw new AppError(JSON.stringify(error), 500);
+    }
+  };
+
+  addProductToCart = async (userId: string, productId: string, quantity: number): Promise<Entities.CartItem> => {
+    try {
+      // check if cart exist for the user.
+      const fetchedUserCart: Maybe<Entities.Cart> = await this.retrieveUserCart(userId);
 
       // checks for product
       const fetchedProduct: Maybe<Entities.Product> = await AppDataSource.getRepository(Entities.Product).findOne({
@@ -46,10 +95,31 @@ class CartService {
       }
       throw new AppError("Failed to add product to cart", 500);
     } catch (error) {
+      logger.error(error);
+      throw new AppError(JSON.stringify(error), 500);
+    }
+  };
+
+  clearCart = async (userId: string): Promise<boolean> => {
+    try {
+      // check if cart exist for the user.
+      const fetchedUserCart: Maybe<Entities.Cart> = await this.retrieveUserCart(userId);
+
+      // remove all entries for the cart in cart-item table
+      const result: TypeORM.DeleteResult = await AppDataSource.getRepository(Entities.CartItem).delete({
+        cartId: fetchedUserCart.id,
+      });
+      if (result.affected) {
+        return true;
+      }
+      // TODO: check the behaviour before merging below line
+      throw new AppError("Failed to clear cart", 500);
+    } catch (error) {
+      logger.error(error);
       throw new AppError(JSON.stringify(error), 500);
     }
   };
 }
 
 const cartService = new CartService();
-export { cartService, CartService };
+export { cartService };

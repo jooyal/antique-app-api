@@ -1,0 +1,5 @@
+export enum ValidationGroup {
+  // CART
+  DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART",
+  FILTER_CART_ITEMS = "FILTER_CART_ITEMS",
+}

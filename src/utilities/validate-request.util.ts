@@ -1,10 +1,14 @@
 import { ValidationError, validate } from "class-validator";
-import { Dict } from "../types/index.js";
 import { AppError } from "../models/app-error-handler.model.js";
+import { ValidationGroup } from "../models/enum/index.js";
+import { Dict } from "../types/index.js";
 
 class ValidateRequest {
-  validator = async <T extends object>(classToValidate: T): Promise<void> => {
-    const validationErrors: ValidationError[] = await validate(classToValidate);
+  validator = async <T extends object>(classToValidate: T, validationGroups?: ValidationGroup[]): Promise<void> => {
+    const validationErrors: ValidationError[] = await validate(
+      classToValidate,
+      validationGroups ? { groups: validationGroups } : {}
+    );
     if (validationErrors.length > 0) {
       const errors: Dict<string>[] = [];
       let count = 0;
