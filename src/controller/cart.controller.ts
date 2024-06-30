@@ -24,13 +24,49 @@ class CartController {
     }
   };
 
-  addProductToCart = async (req: Request, res: Response, next: NextFunction) => {
+  increaseProductQuantity = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const request: CartInput = new CartInput(req);
       // payload validation
       await validateRequest(request);
-      await cartService.addProductToCart(req.context.user.id, request.productId, request.quantity);
-      res.status(200).json({ message: "Item added to cart successfully" });
+      await cartService.increaseOrDecreaseProductQty(
+        req.context.user.id,
+        request.productId,
+        "increase",
+        request.quantity
+      );
+      res.status(200).json({ message: "Product quantity increased successfully!" });
+    } catch (error) {
+      logger.error(error);
+      next(error);
+    }
+  };
+
+  decreaseProductQuantity = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const request: CartInput = new CartInput(req);
+      // payload validation
+      await validateRequest(request);
+      await cartService.increaseOrDecreaseProductQty(
+        req.context.user.id,
+        request.productId,
+        "decrease",
+        request.quantity
+      );
+      res.status(200).json({ message: "Product quantity decreased successfully!" });
+    } catch (error) {
+      logger.error(error);
+      next(error);
+    }
+  };
+
+  removeProductFromCart = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const request: CartInput = new CartInput(req);
+      // payload validation
+      await validateRequest(request);
+      await cartService.removeProductFromCart(req.context.user.id, request.productId);
+      res.status(200).json({ message: "Product removed from cart successfully!" });
     } catch (error) {
       logger.error(error);
       next(error);
