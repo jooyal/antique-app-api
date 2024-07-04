@@ -4,7 +4,7 @@ import { AppError } from "../models/app-error-handler.model.js";
 import * as Entities from "../models/entity/index.js";
 import { FilterEntityOutput, Maybe } from "../types/index.js";
 import { logger } from "../utilities/index.js";
-import _ from "lodash";
+import _ from "lodash-es";
 class CartService {
   private retrieveUserCart = async (userId: string): Promise<Entities.Cart> => {
     try {

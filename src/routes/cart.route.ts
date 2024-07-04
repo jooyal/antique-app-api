@@ -9,10 +9,7 @@ router.use(protect);
 
 // get: fetch items in cart for the user
 // delete: clear cart
-router
-  .route("/")
-  .get(cartController.filterCartItems)
-  .delete(cartController.clearCart);
+router.route("/").get(cartController.filterCartItems).delete(cartController.clearCart);
 
 // add or remove item to cart, default quantity = 1
 router.route("/:productId/increment").patch(cartController.increaseProductQuantity);

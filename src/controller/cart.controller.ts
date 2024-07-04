@@ -11,7 +11,7 @@ class CartController {
     try {
       const request: CartInput = new CartInput(req);
       // payload validation
-      await validateRequest(request, [ValidationGroup.FILTER_CART_ITEMS]);
+      await validateRequest(request, [ValidationGroup.FILTER_ITEMS]);
       const cartItems: FilterEntityOutput<Entities.CartItem> = await cartService.filterCartItems(
         req.context.user.id,
         request.pageNumber,
